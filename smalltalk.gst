@@ -117,37 +117,50 @@ initialize: bok
 	"	  2--3  	"
 	"	 /    \ 	"
 	"	1      4	"
-    "	 \    / 	"
+	"	 \    / 	"
 	"	  6--5  	"
 
     | kat |
-	kat := 3.14159265359/3.	"przyblizony kat w radianach, nie znalazlem stalej PI w Smalltalku"
+	kat := (Float pi)/3.	"kat w radianach"
 
 	super initialize: 6 name: 'Heks'.
-	wierzcholki at: 2 put: (kat cos)@(kat sin).
-	wierzcholki at: 3 put: ((kat cos) + bok)@(kat sin).
-	wierzcholki at: 4 put: (2*bok)@0.
-	wierzcholki at: 5 put: ((kat cos) + bok)@(-1*(kat sin)).
-	wierzcholki at: 6 put: (kat cos)@(-1*(kat sin)).! !
+    	wierzcholki at: 2 put: (((wierzcholki at: 1) x) + (bok *(kat cos)))@(((wierzcholki at: 1) y) + (bok * (kat sin))).
+	wierzcholki at: 3 put: (((wierzcholki at: 1) x) + ((bok * (kat cos)) + bok))@(((wierzcholki at: 1) y) + (bok * (kat sin))).
+	wierzcholki at: 4 put: (((wierzcholki at: 1) x) + (2 * bok))@((wierzcholki at: 1) y).
+	wierzcholki at: 5 put: (((wierzcholki at: 1) x) + ((bok * (kat cos)) + bok))@(((wierzcholki at: 1) y) + (-1 * bok* (kat sin))).
+	wierzcholki at: 6 put: (((wierzcholki at: 1) x) + (bok * (kat cos)))@(((wierzcholki at: 1) y) + (-1 * bok * (kat sin))).! !
 	
 	
 
 "Testy"
+Transcript cr.
+Transcript show: 'Utworzenie heksa o boku 1 i wypisanie jego pola'; cr.
 h1 := (Heks new) initialize: 1.
+Transcript show: 'Pole h1: '.
+Transcript show: (h1 pole) printString; cr.
 
-h1 pole.
+Transcript cr.
+Transcript show: 'Wydrukowanie heksa o boku 1'; cr.
 h1 drukuj.
 
+Transcript cr.
+Transcript show: 'Utworzenie i wydrukowanie heksa o boku 2'; cr.
 h2 := (Heks new) initialize: 2.
+h2 drukuj.
 
+Transcript cr.
 Transcript show: 'Suma pol h1 i h2: '.
 A := (h1 pole) + (h2 pole). 
 Transcript show: A printString; cr.
 
+Transcript cr.
 Transcript show: 'Dodanie h1 do h2'; cr.
 h12 := h1 + h2.
-h12 drukuj.
+Transcript show: 'Pole h1 + h2: '.
+Transcript show: (h12 pole) printString; cr.
 
+Transcript cr.
 Transcript show: 'Dodanie h2 do h1'; cr.
 h21 := h2 + h1.
-h21 drukuj.
+Transcript show: 'Pole h2 + h1: '.
+Transcript show: (h21 pole) printString; cr.
